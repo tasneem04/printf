@@ -1,7 +1,6 @@
-#include <stdarg.h>
-#include <string.h>
-#include <unistd.h>
+#include <stdio.h>
 #include "main.h"
+
 /**
  * _printf - Custom printf function supporting %c, %s, and %%
  * @format: Format string with optional format specifiers
