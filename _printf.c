@@ -1,5 +1,10 @@
 #include "main.h"
 
+#include <limits.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
+
 /**
  * _printf - implementation of the inbuilt printf
  * @format: the format specifier
