@@ -2,6 +2,15 @@
 #include <stdarg.h>
 #include "main.h"
 
+/**
+ * _printf - Custom printf function supporting %c, %s, and %%
+ * @format: Format string with optional format specifiers
+ * @...: Additional arguments corresponding to the format specifiers
+ *
+ * Return: The number of characters printed
+ */
+
+
 int _printf(const char *format, ...)
 {
   va_list args;
