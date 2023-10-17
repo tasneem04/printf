@@ -19,19 +19,14 @@ int _printf(const char *format, ...)
         {
             // Handle format specifiers
             switch (*++format)
-            {
-            case 'd':
-                count += fprintf(stdout, "%d", va_arg(args, int));
-                break;
+          {
             case 'c':
                 count += fprintf(stdout, "%c", va_arg(args, char));
                 break;
             case 's':
                 count += fprintf(stdout, "%s", va_arg(args, char *));
                 break;
-            case 'f':
-                count += fprintf(stdout, "%f", va_arg(args, double));
-                break;
+          
             default:
                 // Handle unknown format specifiers
                 putchar('%');
