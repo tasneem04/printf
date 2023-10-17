@@ -4,13 +4,13 @@
 
 int _printf(const char *format, ...)
 {
+ va_list args;
+    va_start(args, format);
 
-	va_list argpn;
-	va_start(argpn ,format);
-	int count = 0;
-	while (*format != '\0')
-{
-	if (*format != '%')
+    int count = 0;
+    while (*format != '\0')
+    {
+        if (*format != '%')
         {
             putchar(*format);
             count++;
@@ -21,16 +21,16 @@ int _printf(const char *format, ...)
             switch (*++format)
             {
             case 'd':
-                count += fprintf(stdout, "%d", va_arg(argpn, int));
+                count += fprintf(stdout, "%d", va_arg(args, int));
                 break;
             case 'c':
-                count += fprintf(stdout, "%c", va_arg(argpn, char));
+                count += fprintf(stdout, "%c", va_arg(args, char));
                 break;
             case 's':
-                count += fprintf(stdout, "%s", va_arg(argpn, char *));
+                count += fprintf(stdout, "%s", va_arg(args, char *));
                 break;
             case 'f':
-                count += fprintf(stdout, "%f", va_arg(argpn, double));
+                count += fprintf(stdout, "%f", va_arg(args, double));
                 break;
             default:
                 // Handle unknown format specifiers
@@ -38,12 +38,11 @@ int _printf(const char *format, ...)
                 putchar(*format);
                 count += 2;
                 break;
-            }	
+            }
+        }
+        format++;
+    }
 
-}
- format++;
-	
-	va_end(argpn);
-	return count ;
-	
+    va_end(args);
+    return count;
 }
