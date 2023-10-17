@@ -1,7 +1,6 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
 #include "main.h"
-
 /**
  * _printf - Custom printf function supporting %c, %s, and %%
  * @format: Format string with optional format specifiers
@@ -9,46 +8,43 @@
  *
  * Return: The number of characters printed
  */
-
-
-int _printf(const char *format, ...)
-{
-  va_list args;
+int _printf(const char *format, ...) {
+    va_list args;
     va_start(args, format);
 
     int char_count = 0; // To keep track of the number of characters printed
 
-    while (*format != '\0') {
+    while (*format) {
         if (*format == '%') {
-            format++; // Move past the '%'
+            format++;
             switch (*format) {
-                case 'c':
-                    // Handle %c specifier (character)
-                    char c = va_arg(args, int); // Characters are promoted to int
-                    putchar(c);
+                case 'c': {
+                    char c = va_arg(args, int);
+                    write(1, &c, 1); // Print character
                     char_count++;
                     break;
-                case 's':
-                    // Handle %s specifier (string)
+                }
+                case 's': {
                     char *str = va_arg(args, char *);
-                    fputs(str, stdout);
-                    char_count += strlen(str);
+                    while (*str) {
+                        write(1, str, 1); // Print each character in the string
+                        str++;
+                        char_count++;
+                    }
                     break;
+                }
                 case '%':
-                    // Handle %% as a literal '%'
-                    putchar('%');
+                    write(1, "%", 1); // Print a literal '%'
                     char_count++;
                     break;
                 default:
-                    // Unsupported format specifier, print it as is
-                    putchar('%');
+                    write(1, "%", 1); // Print the '%' and the unsupported character
                     char_count++;
-                    putchar(*format);
+                    write(1, format, 1);
                     char_count++;
             }
         } else {
-            // Print characters that are not format specifiers
-            putchar(*format);
+            write(1, format, 1); // Print characters that are not format specifiers
             char_count++;
         }
         format++;
