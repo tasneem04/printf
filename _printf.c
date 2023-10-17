@@ -8,48 +8,43 @@
  *
  * Return: The number of characters printed
  */
-int _printf(const char *format, ...) {
-    va_list args;
+int _printf(const char *format, ...) 
+{
+ va_list args;
     va_start(args, format);
 
-    int char_count = 0; // To keep track of the number of characters printed
-
-    while (*format) {
-        if (*format == '%') {
-            format++;
-            switch (*format) {
-                case 'c': {
-                    char c = va_arg(args, int);
-                    write(1, &c, 1); // Print character
-                    char_count++;
-                    break;
-                }
-                case 's': {
-                    char *str = va_arg(args, char *);
-                    while (*str) {
-                        write(1, str, 1); // Print each character in the string
-                        str++;
-                        char_count++;
-                    }
-                    break;
-                }
-                case '%':
-                    write(1, "%", 1); // Print a literal '%'
-                    char_count++;
-                    break;
-                default:
-                    write(1, "%", 1); // Print the '%' and the unsupported character
-                    char_count++;
-                    write(1, format, 1);
-                    char_count++;
+    int count = 0;
+    while (*format != '\0')
+    {
+        if (*format != '%')
+        {
+            putchar(*format);
+            count++;
+        }
+        else
+        {
+            // Handle format specifiers
+            switch (*++format)
+            {
+            case 'd':
+                count += fprintf(stdout, "%d", va_arg(args, int));
+                break;
+            case 'c':
+                count += fprintf(stdout, "%c", va_arg(args, char));
+                break;
+            case 's':
+                count += fprintf(stdout, "%s", va_arg(args, char *));
+                break;
+            case 'f':
+                count += fprintf(stdout, "%f", va_arg(args, double));
+                break;
+            default:
+                // Handle unknown format specifiers
+                putchar('%');
+                putchar(*format);
+                count += 2;
+                break;
             }
-        } else {
-            write(1, format, 1); // Print characters that are not format specifiers
-            char_count++;
         }
         format++;
-    }
-
-    va_end(args);
-    return char_count; // Return the total number of characters printed
-}
+    }   
