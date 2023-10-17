@@ -1,4 +1,5 @@
 #include <stdarg.h>
+#include <string.h>
 #include <unistd.h>
 #include "main.h"
 /**
@@ -10,37 +11,59 @@
  */
 int _printf(const char *format, ...) 
 {
- va_list args;
-    va_start(args, format);
 
-    int count = 0;
-    while (*format != '\0')
-    {
-        if (*format != '%')
-        {
-            putchar(*format);
-            count++;
-        }
-        else
-        {
-            // Handle format specifiers
-            switch (*++format)
-            {
-           
-            case 'c':
-                count += fprintf(stdout, "%c", va_arg(args, char));
-                break;
-            case 's':
-                count += fprintf(stdout, "%s", va_arg(args, char *));
-              
-             break;
-            default:
-                // Handle unknown format specifiers
-                putchar('%');
-                putchar(*format);
-                count += 2;
-                break;
-            }
-        }
-        format++;
-    }   
+ va_list list_args;
+
+  int count_print = 0;
+
+  if(format == NULL )
+  {
+	  return (-1);
+  }
+
+  va_start(list_args,format);
+  
+  while(*format)
+  {
+  if(*format != '%')
+  {
+  write(1, format ,1);
+  count_print++;
+  }
+  else
+  {
+  format++;
+  
+if(*format == '\0')
+{break;}
+
+else if(*format == 'c')
+{
+
+char c = va_arg(list_args, int);
+write (1,&c,1);
+count_print++;
+}
+
+else if(*format == 's')
+{
+char *str = va_arg(list_args,char*);
+int str_len = 0;
+
+// calculate the lenght 
+while (str[str_len] != '\0')
+	str_len++;
+write(1, str, str_len);
+count_print += str_len;
+}
+
+  }
+
+format++;
+
+}
+
+va_end(list_args);
+return count_print;
+
+}
