@@ -1,30 +1,47 @@
+#include <stdio.h>
+#include <stdarg.h>
 #include "main.h"
-
-/**
- * _printf - Produces output according to a format
- * @format: Is a character string. The format string
- * is composed of zero or more directives
- *
- * Return: The number of characters printed (excluding
- * the null byte used to end output to strings)
- **/
-int _printf(const char *format, ...)
+int myprintf(const char *format, ...)
 {
-	int size;
-	va_list args;
+    va_list args;
+    va_start(args, format);
 
-	if (format == NULL)
-		return (-1);
+    int count = 0;
+    while (*format != '\0')
+    {
+        if (*format != '%')
+        {
+            putchar(*format);
+            count++;
+        }
+        else
+        {
+            // Handle format specifiers
+            switch (*++format)
+            {
+            case 'd':
+                count += fprintf(stdout, "%d", va_arg(args, int));
+                break;
+            case 'c':
+                count += fprintf(stdout, "%c", va_arg(args, char));
+                break;
+            case 's':
+                count += fprintf(stdout, "%s", va_arg(args, char *));
+                break;
+            case 'f':
+                count += fprintf(stdout, "%f", va_arg(args, double));
+                break;
+            default:
+                // Handle unknown format specifiers
+                putchar('%');
+                putchar(*format);
+                count += 2;
+                break;
+            }
+        }
+        format++;
+    }
 
-	size = _strlen(format);
-	if (size <= 0)
-		return (0);
-
-	va_start(args, format);
-	size = handler(format, args);
-
-	_putchar(-1);
-	va_end(args);
-
-	return (size);
+    va_end(args);
+    return count;
 }
