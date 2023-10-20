@@ -54,6 +54,19 @@ int _printf(const char *format, ...)
                     char_count += length;
                     break;
                 }
+		    case 'b':
+		    {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char binary_str[33];
+		    int i;
+                    for ( i = 31; i >= 0; i--) {
+                        binary_str[31 - i] = (num & (1 << i)) ? '1' : '0';
+                    }
+                    binary_str[32] = '\0';
+                    write(1, binary_str, 32);
+                    char_count += 32;
+                    break;
+                }
                 default:
                     write(1, "%", 1);
                     char_count++;
