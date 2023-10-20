@@ -114,7 +114,9 @@ int _printf(const char *format, ...)
 		 {
                     char *str = va_arg(args, char *);
                     int length = strlen(str);
-                    for (int i = length - 1; i >= 0; i--) {
+                   int i;
+		    for ( i = length - 1; i >= 0; i--)
+		    {
                         write(1, &str[i], 1);
                         char_count++;
                     }
