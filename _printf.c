@@ -119,7 +119,7 @@ int _printf(const char *format, ...)
                         char_count++;
                     }
                     break;
-
+		 }
                 default:
                     write(1, "%", 1);
                     char_count++;
