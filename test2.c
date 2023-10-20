@@ -4,14 +4,14 @@
 #include "main.h"
 
 /**
- * _printf - Custom printf function supporting %c, %s, and %%
+ * test_printf - Custom printf function supporting %c, %s, and %%
  * @format: Format string with optional format specifiers
  * @...: Additional arguments corresponding to the format specifiers
  *
  * Return: The number of characters print
  */
 
-int _printf(const char *format, ...)
+int test_printf(const char *format, ...)
 {
 	int count = 0;
  va_list args;
