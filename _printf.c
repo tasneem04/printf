@@ -67,6 +67,38 @@ int _printf(const char *format, ...)
                     char_count += 32;
                     break;
                 }
+		     case 'u': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char num_str[20];
+                    int length = sprintf(num_str, "%u", num);
+                    write(1, num_str, length);
+                    char_count += length;
+                    break;
+                }
+                case 'o': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char num_str[20];
+                    int length = sprintf(num_str, "%o", num);
+                    write(1, num_str, length);
+                    char_count += length;
+                    break;
+                }
+                case 'x': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char num_str[20];
+                    int length = sprintf(num_str, "%x", num);
+                    write(1, num_str, length);
+                    char_count += length;
+                    break;
+                }
+                case 'X': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char num_str[20];
+                    int length = sprintf(num_str, "%X", num);
+                    write(1, num_str, length);
+                    char_count += length;
+                    break;
+                }
                 default:
                     write(1, "%", 1);
                     char_count++;
