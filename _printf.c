@@ -22,23 +22,6 @@ int _printf(const char *format, ...)
 	{
             format++;
 	    
-            char plus_flag = 0;
-            char space_flag = 0;
-            char hash_flag = 0;
-            char zero_flag = 0;
-            while (*format == '+' || *format == ' ' || *format == '#' || *format == '0')
-	    {
-                if (*format == '+') {
-                    plus_flag = 1;
-                } else if (*format == ' ') {
-                    space_flag = 1;
-                } else if (*format == '#') {
-                    hash_flag = 1;
-                } else if (*format == '0') {
-                    zero_flag = 1;
-                }
-                format++;
-            }
             switch (*format) 
 	    {
                 case 'c':
