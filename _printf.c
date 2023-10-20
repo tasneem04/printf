@@ -1,47 +1,36 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "main.h"
+
+/**
+ * _printf - implementation of the inbuilt printf
+ * @format: the format specifier
+ * Return: the formated string
+ */
+
 int _printf(const char *format, ...)
 {
-    va_list args;
-    va_start(args, format);
+	int printed = 0;
 
-    int count = 0;
-    while (*format != '\0')
-    {
-        if (*format != '%')
-        {
-            putchar(*format);
-            count++;
-        }
-        else
-        {
-            // Handle format specifiers
-            switch (*++format)
-            {
-            case 'd':
-                count += fprintf(stdout, "%d", va_arg(args, int));
-                break;
-            case 'c':
-                count += fprintf(stdout, "%c", va_arg(args, char));
-                break;
-            case 's':
-                count += fprintf(stdout, "%s", va_arg(args, char *));
-                break;
-            case 'f':
-                count += fprintf(stdout, "%f", va_arg(args, double));
-                break;
-            default:
-                // Handle unknown format specifiers
-                putchar('%');
-                putchar(*format);
-                count += 2;
-                break;
-            }
-        }
-        format++;
-    }
+	va_list args;
 
-    va_end(args);
-    return count;
+	va_start(args, format);
+
+	while (*format != '\0')
+	{
+		if (*format == '%')
+		{
+			format++;
+			printed = selector(format, args, printed);
+			format++;
+		}
+		else
+		{
+			_putchar(*format);
+			printed++;
+			format++;
+		}
+	}
+	va_end(args);
+	return (printed);
 }
