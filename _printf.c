@@ -22,7 +22,11 @@ int _printf(const char *format, ...)
         if (*format == '%') 
 	{
             format++;
-	    
+	        while (*format == '+' || *format == ' ' || *format == '#' || *format == '0' || *format == '-') {
+                format++;
+            }
+
+
             switch (*format) 
 	    {
                 case 'c':
