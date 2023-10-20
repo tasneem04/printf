@@ -99,6 +99,15 @@ int _printf(const char *format, ...)
                     char_count += length;
                     break;
                 }
+		 case 'p':
+			  {
+                    void *ptr = va_arg(args, void *);
+                    char ptr_str[20];
+                    int length = sprintf(ptr_str, "%p", ptr);
+                    write(1, ptr_str, length);
+                    char_count += length;
+                    break;
+                }
                 default:
                     write(1, "%", 1);
                     char_count++;
